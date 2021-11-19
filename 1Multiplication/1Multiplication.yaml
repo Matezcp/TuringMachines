@@ -1,0 +1,39 @@
+name: 1Multiplication
+source code: |-
+  # Adds 1 to a binary number.
+  input: '11'
+  blank: B
+  start state: q0
+  table:
+    q0:
+      1 : {write: I, R: q1}
+    q1:
+      D     : R
+      E     : {write: D, R}
+      [1,V]: {write: D, R: q2}
+      [B,W]: {L: q5}
+    q2:
+      [W,1]: R
+      V    : {write: 1, R}
+      B    : {write: W, L: q3}
+    q3:
+      [W,V,E]: L
+      I      : {R: q1}
+      1      : {write: V, R: q4}
+      D      : {write: E, R: q4}
+    q4:
+      [D,1,W,V,E] : R
+      B    : {write: W, L: q3}
+    q5:
+      [D,W]: L
+      I    : {write: 1, R: q6}
+    q6:
+      [D,W]: {write: 1, R}
+positions:
+  q0: {x: 400.02, y: 311.06, fixed: false}
+  q1: {x: 363.99, y: 171.44, fixed: false}
+  q2: {x: 447.07, y: 58.08, fixed: false}
+  q3: {x: 508.17, y: 186.06, fixed: false}
+  q4: {x: 562.45, y: 316.2}
+  q5: {x: 235.99, y: 234.41, fixed: false}
+  q6: {x: 265.72, y: 375.28, fixed: false}
