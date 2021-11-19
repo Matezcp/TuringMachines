@@ -1,0 +1,88 @@
+name: binary increment
+source code: |
+  # Adds 1 to a binary number.
+  input: '11'
+  blank: B
+  start state: q0
+  table:
+    # scan to the rightmost digit
+    q0:
+      1 : {write: I, R: q1}
+    # then carry the 1
+    q1:
+      D     : R
+      E     : {write: D, R}
+      [1,V]: {write: D, R: q2}
+      [B,W]: {L: q5}
+    q2:
+      [W,1]: R
+      V    : {write: 1, R}
+      B    : {write: W, L: q3}
+    q3:
+      [W,V,E]: L
+      I      : {R: q1}
+      1      : {write: V, R: q4}
+      D      : {write: E, R: q4}
+    q4:
+      [D,1,W,V,E] : R
+      B    : {write: W, L: q3}
+    q5:
+      [D,W]: L
+      I    : {write: 1, R: q6}
+    q6:
+      [D,W]: {write: 1, R}
+
+
+  # Exercises:
+
+  # • Modify the machine to always halt on the leftmost digit
+  #   (regardless of the number's length).
+  #   Hint: add a state between carry and done.
+
+  # • Make a machine that adds 2 instead of 1.
+  #   Hint: 2 is '10' in binary, so the last digit is unaffected.
+  #   Alternative hint: chain together two copies of the machine from
+  #   the first exercise (renaming the states of the second copy).
+
+  # • Make a machine to subtract 1.
+  #   To simplify things, assume the input is always greater than 0.
+positions:
+  q0: {x: 403.19, y: 335.72, fixed: false}
+  q1: {x: 378.98, y: 193.44, fixed: false}
+  q2: {x: 438.08, y: 65.85, fixed: false}
+  q3: {x: 522.12, y: 181.07, fixed: false}
+  q4: {x: 562.45, y: 316.2}
+  q5: {x: 238.07, y: 212.52, fixed: false}
+  q6: {x: 249.31, y: 355.63, fixed: false}
+editor contents: |
+  # Adds 1 to a binary number.
+  input: '11'
+  blank: B
+  start state: q0
+  table:
+    # scan to the rightmost digit
+    q0:
+      1 : {write: I, R: q1}
+    # then carry the 1
+    q1:
+      D     : R
+      E     : {write: D, R}
+      [1,V]: {write: D, R: q2}
+      [B,W]: {L: q5}
+    q2:
+      [W,1]: R
+      V    : {write: 1, R}
+      B    : {write: W, L: q3}
+    q3:
+      [W,V,E]: L
+      I      : {R: q1}
+      1      : {write: V, R: q4}
+      D      : {write: E, R: q4}
+    q4:
+      [D,1,W,V,E] : R
+      B    : {write: W, L: q3}
+    q5:
+      [D,W]: L
+      I    : {write: 1, R: q6}
+    q6:
+      [D,W]: {write: 1, R}
