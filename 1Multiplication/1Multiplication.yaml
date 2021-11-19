@@ -5,10 +5,8 @@ source code: |
   blank: B
   start state: q0
   table:
-    # scan to the rightmost digit
     q0:
       1 : {write: I, R: q1}
-    # then carry the 1
     q1:
       D     : R
       E     : {write: D, R}
@@ -31,21 +29,6 @@ source code: |
       I    : {write: 1, R: q6}
     q6:
       [D,W]: {write: 1, R}
-
-
-  # Exercises:
-
-  # • Modify the machine to always halt on the leftmost digit
-  #   (regardless of the number's length).
-  #   Hint: add a state between carry and done.
-
-  # • Make a machine that adds 2 instead of 1.
-  #   Hint: 2 is '10' in binary, so the last digit is unaffected.
-  #   Alternative hint: chain together two copies of the machine from
-  #   the first exercise (renaming the states of the second copy).
-
-  # • Make a machine to subtract 1.
-  #   To simplify things, assume the input is always greater than 0.
 positions:
   q0: {x: 403.19, y: 335.72, fixed: false}
   q1: {x: 378.98, y: 193.44, fixed: false}
