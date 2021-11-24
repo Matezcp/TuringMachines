@@ -1,7 +1,7 @@
 name: permutation
 source code: |-
   # Adds 1 to a binary number.
-  input: 'bcabca'
+  input: 'abcbcca'
   blank: B
   start state: q0
   table:
@@ -21,60 +21,63 @@ source code: |-
       X    : {R: q0}
     #Volta para o inicio, marcando os visitados como marcados
     q3:
-      [a,b,c,X]     : L
-      V: {write: M, L}
-      B : {R: q4}
-    #Procura um simbolo diferente de a para conferir
-    q4:
-      [X,a]: R
-      #Se achar b, vai para o estado que confere os 'b's
-      b: {write: Y, R: q5}
-      #Se achar c, vai para o estado que confere os 'c's
-      c: {write: Y, R: q8}
-      [M,B]: {R: aceita}
-    #Procura especificamente um 'b'
+      [b,c,X]     : L
+      B : {R: qb}
+    #Procura um b
     qb:
-      [X,a,c]: R
-      b: {write: Y, R: q5}
-      V: {R: q7}
-    #Marca em um M que lemos um 'b'
-    q5:
-      [a,X,b,c,V]: R
-      M: {write: V, L: q6}
+      [X,c]: R
+      b: {write: Y, R: q4}
+      [V,B]: {R: q6}
+    #Marca em um M que contamos um 'b'
+    q4:
+      [X,b,c,V]: R
+      M: {write: V, L: q5}
       #Caso encontre um B, há mais 'b' que 'a' -> erro
     #Volta para o ultimo 'b' encontrado que é um Y
-    q6:
-      [a,b,c,V,X]: L
+    q5:
+      [b,c,V,X]: L
       Y: {write: X, R: qb}
-    #Verifica se há o mesmo número do simbolo analisado e 'a's
-    q7:
+    #Verifica os b's
+    q6:
       V: R
-      B: {L: q3}
-    #Procura especificamente um 'c'
+      B: {L: q7}
+    #Reinicia os V's e vai verificar os c's
+    q7:
+      [c,X]     : L
+      V: {write: M, L}
+      B : {R: qc}
+    #Procura um c
     qc:
-      [X,a,b]: R
+      X: R
       c: {write: Y, R: q8}
-      V: {R: q7}
-    #Marca em um M que lemos um 'c'
+      [V,B]: {R: q10}
+    #Marca em um M que contamos um c
     q8:
-      [a,X,b,c,V]: R
+      [X,c,V]: R
       M: {write: V, L: q9}
+      #Caso encontre um B, há mais 'b' que 'a' -> erro
     #Volta para o ultimo 'c' encontrado que é um Y
     q9:
-      [a,b,c,V,X]: L
+      [c,V,X]: L
       Y: {write: X, R: qc}
+    #Confere os c's
+    q10:
+      V: R
+      B: {L: aceita}
     aceita:
+    
 positions:
-  q0: {x: 685.41, y: 363.71}
-  q1: {x: 713.88, y: 435}
-  q2: {x: 589.7, y: 480}
-  q3: {x: 661.48, y: 255.02}
-  q4: {x: 506.99, y: 355.39}
-  qb: {x: 519.78, y: 160.36}
-  q5: {x: 455.46, y: 242.92}
-  q6: {x: 440.03, y: 136.65}
-  q7: {x: 568, y: 20}
-  qc: {x: 231.88, y: 104.35}
-  q8: {x: 283.09, y: 194.07}
-  q9: {x: 160.3, y: 246.3}
-  aceita: {x: 229.95, y: 463.17}
+  q0: {x: 695.51, y: 191.99}
+  q1: {x: 780, y: 152.17}
+  q2: {x: 777.03, y: 262.37}
+  q3: {x: 610.06, y: 185.23}
+  qb: {x: 532.64, y: 180.56}
+  q4: {x: 580.45, y: 302.13}
+  q5: {x: 473.83, y: 309.95}
+  q6: {x: 439.11, y: 183.48}
+  q7: {x: 375.16, y: 181.61}
+  qc: {x: 268.61, y: 182.4}
+  q8: {x: 338.19, y: 305.18}
+  q9: {x: 228.25, y: 304.15}
+  q10: {x: 165.46, y: 189.21}
+  aceita: {x: 65.58, y: 193.2}
